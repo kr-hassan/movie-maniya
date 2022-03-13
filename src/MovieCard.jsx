@@ -1,9 +1,10 @@
 import React from "react";
 const MovieCard = ({movie})=>{
+    console.log('movie->', movie)
     return(
         <div className="movie">
             <div>
-                <p>{movie.Year}</p>
+                <p>{movie.Year??''}</p>
             </div>
             <div>
                 <img src={movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/400'}

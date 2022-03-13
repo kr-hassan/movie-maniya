@@ -18,12 +18,13 @@ const movie1 = {
 const App = () => {
 
     const [movies, setMovies] = useState([]);
+    const [searchTerm, setSearchTerm] = useState([]);
 
     const searchMovies = async (title) => {
         const response = await fetch(`${API_URL}&s=${title}`);
         const data = await response.json()
-        setMovies(data.Search);
-        // console.log(data.Search);
+        setMovies(data?.Search || []);
+         console.log('data.Search',data.Search);
     }
     useEffect(() => {
         searchMovies('Spider-man');
@@ -34,13 +35,13 @@ const App = () => {
             <div className="app">
                 <h1>Movie Maniya</h1>
                 <div className="search">
-                    <input type="text" placeholder="Search" value="Superman"
-                           onChange={() => {
-                           }}
+                    <input placeholder="Search" value={searchTerm}
+                           onChange={(e) => setSearchTerm(e.target.value)
+                           }
                     />
                     <img src={SearchIcon} alt="search"
-                         onClick={() => {
-                         }}
+                         onClick={() => searchMovies(searchTerm)
+                         }
                     />
 
                 </div>
@@ -48,12 +49,11 @@ const App = () => {
                     movies?.length > 0 ? (
                             <div className="container">
                                 {/*<MovieCard movie1={movies[0]}/>*/}
-                                {movies.map((movie) => (
-                                    <MovieCard movie={movie}/>
+                                {movies.map((movie, index) => (
+                                    <MovieCard key={index} movie={movie}/>
                                 ))}
                             </div>
-                        ) :
-                        (
+                        ) : (
                             <div className="empty">
                                 <h2>No movies Found!</h2>
 
